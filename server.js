@@ -1,13 +1,12 @@
-import { configDotenv } from 'dotenv';
-import { createServer } from 'node:http';
-import app from './scr/app.js';
-import { connect } from 'mongoose';
-import { Server } from 'socket.io';
-import { registerChatSocket } from './socket/chatSocket.js';
-
+import { configDotenv } from "dotenv";
+import { createServer } from "node:http";
+import app from "./scr/app.js";
+import { connect } from "mongoose";
+import { Server } from "socket.io";
+import { registerChatSocket } from "./socket/chatSocket.js";
 
 configDotenv({
-  path: './.env',
+  path: "./.env",
 });
 
 connect(process.env.DATABASE_URL)
@@ -19,15 +18,15 @@ connect(process.env.DATABASE_URL)
   });
 
 const httpServer = createServer(app);
-const io = new Server(httpServer,{
-  cors:{
-    origin:(origin, callback) => callback(null, true),
+const io = new Server(httpServer, {
+  cors: {
+    origin: (origin, callback) => callback(null, true),
     credentials: true,
-  }
+  },
 });
 
 registerChatSocket(io);
 
-httpServer.listen(process.env.PORT, '127.0.0.1', () => {
+httpServer.listen(process.env.PORT, () => {
   console.log(`App Listening on PORT ${process.env.PORT}`);
 });
