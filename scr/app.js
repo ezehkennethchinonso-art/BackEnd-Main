@@ -15,7 +15,6 @@ app.use(express.json());
 app.use(cookieparser());
 
 
-
 app.use(cors({
     origin:'http://127.0.0.1:5500',
 credentials: true
@@ -27,6 +26,13 @@ app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/admin", adminRoutes)
 app.use("/auth", authRouter);
+
+app.get("/health", (req,res)=> {
+    res.status(200).json({
+        success: true,
+        message: ""
+    })
+})
 
 
 export default app;
